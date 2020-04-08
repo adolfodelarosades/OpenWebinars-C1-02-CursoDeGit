@@ -138,7 +138,7 @@ En esta lección exploraremos diferentes formas para encontrar en cuál commit s
 
 El comando *git diff* es el modo más simple de comparar qué ha cambiado entre commits. Mostrará las diferencias entre dos commits.
 
-##### Ejemplo:
+##### Ejemplo:
 
 Podemos visualizar las diferencias entre dos *commits* visualizando los *hash-id’s*
 
