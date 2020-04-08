@@ -408,9 +408,9 @@ Usando el editor, simplemente reordenaremos las líneas, guardaremos y saldremos
 
 Aquí tenemos una ilustración:
 
-<img src="images/1-pick-2">
+<img src="images/1-pick-2.jpg">
 
-<img src="images/1-pick-3">
+<img src="images/1-pick-3.jpg">
 
 ```sh
 $ git log --oneline
