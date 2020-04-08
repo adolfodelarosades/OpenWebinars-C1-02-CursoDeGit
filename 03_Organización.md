@@ -284,7 +284,8 @@ En esta lección aprenderemos cómo podemos compartir cambios en nuestro reposit
 
 Con Git como DVCS, tenemos nuestro repositorio local conteniendo todos los logs, ficheros y cambios realizados desde que se inicializó el repositorio. Para asegurar que todos están trabajando en la copia más reciente, es necesario compartir los cambios. Cuando compartimos estos cambios con otros repositorios, solo se sincronizarán las diferencias, por lo que es un procedimiento extremadamente rápido.
 
-Paso 1 - Git Remote
+### Paso 1 - Git Remote
+
 Los repositorios remotos permiten compartir cambios desde o hacia nuestro repositorio. Las ubicaciones remotas son generalmente servidores locales, una máquina de un equipo de trabajo o bien un almacén de repositorios en la nube como GitLab o Github.
 
 Los repositorios remotos se añaden usando el comando git remote con un nombre amigable y una ubicación remota; normalmente una conexión HTTPS o SSH (para esto último no hace falta software específico como GitLab).
@@ -293,64 +294,295 @@ Ejemplo: https://github.com/sharkdp/bat
 
 El nombre amigable permite referenciar la localización en otros comandos. Nuestro repositorio local puede referenciar múltiples repositorios remotos, dependiendo de nuestras necesidades.
 
-Tarea
-Trabajaremos en otro directorio. Crearemos la carpeta scn3 y esa será nuestro working directory.
+#### Tarea
+
+Trabajaremos en otro directorio. Crearemos la carpeta scn3 y esa será nuestro *working directory*.
 
 Agregaremos el repositorio remoto https://github.com/sharkdp/bat usando el comando git remote con el nombre amigable origin.
 
 Formato de llamada:
 
+```sh
 git remote add origin /s/remote-project/1
 git fetch origin
-Avanzado
-Si usamos git clone que será tratado en una lección futura, cuando se clona el repositorio, se agrega automáticamente como descriptor amigable que lo referencia, el nombre origin.
+```
 
-Paso 2 - Git Push
-Cuando estamos listos para compartir nuestros commits, es necesario hacer un push de ellos a un repositorio remoto usando git push. Un flujo de trabajo habitual de GIT sería llevar a cabo múltiples commits pequeños conforme vamos finalizando tareas, y hacerles un push a un repositorio remoto en hitos relevantes, como cuando finalizamos un bloque de trabajo, de manera que aseguramos la sincronización del código dentro de un equipo.
+#### Avanzado
 
-El comando git push se acompaña de dos parámetros. El primero es el nombre amigable del repositorio remoto (normalmente origin). El segundo es el nombre de la rama (normalmente, rama master). Por defecto, todos los repositorios tienen una rama master donde se trabaja con el código.
+Si usamos *git clone* que será tratado en una lección futura, cuando se clona el repositorio, se agrega automáticamente como descriptor amigable que lo referencia, el nombre *origin*.
 
-Tarea
-Haremos push de los commits de la rama master a la ubicación remota (origin).
+### Paso 2 - Git Push
 
-Para este ejercicio, vamos crearnos un usuario en gitlab. Crearemos un nuevo proyecto y nos vincularemos a él. Hacemos un pull. Posteriormente, crearemos un archivo (por ejemplo README2.md), y lo aprobaremos commit en nuestro master. Por último, lo subiremos al repositorio de Gitlab
+Cuando estamos listos para compartir nuestros *commits*, es necesario hacer un *push* de ellos a un repositorio remoto usando *git push*. Un flujo de trabajo habitual de GIT sería llevar a cabo múltiples *commits* pequeños conforme vamos finalizando tareas, y hacerles un *push* a un repositorio remoto en hitos relevantes, como cuando finalizamos un bloque de trabajo, de manera que aseguramos la sincronización del código dentro de un equipo.
 
-Paso 3 - Git Pull
-El comando git push permite subir los cambios a un repositorio remoto, mientras que git pull funciona de forma inversa. El comando git pull permite sincronizar cambios de un repositorio remoto en nuestra versión local.
+El comando *git push* se acompaña de dos parámetros. El primero es el nombre amigable del repositorio remoto (normalmente *origin*). El segundo es el nombre de la rama (normalmente, rama *master*). Por defecto, todos los repositorios tienen una rama *master* donde se trabaja con el código.
 
-Los cambios desde el repositorio remoto son automáticamente fusionados (merge) en la rama en la que estamos trabajando en el momento de lanzar el comando.
+#### Tarea
 
-Tarea
-Crear un nuevo repositorio llamado scn3-pull.
-Descargar (pull) los cambios de una ubicación remota https://github.com/sharkdp/bat a nuestra rama master.
-Borrar los archivos siguientes appveyor.yml Cargo.lock Cargo.toml LICENSE-APACHE LICENSE-MIT README.md
-Agregar un archivo LEEME.txt
-Aprobar los cambios.
-Lanzar un “ls” para ver los archivos de la rama master.
-Hacer un checkout para cambiarnos a origin/master.
-Lanzar un “ls” para ver los archivos de la rama origin/master.
-Conmutarnos de nuevo a la rama master y volver a lanzar un comando “ls”
+Haremos *push* de los *commits* de la rama *master* a la ubicación remota (*origin*).
+
+Para este ejercicio, vamos crearnos un usuario en gitlab. Crearemos un nuevo proyecto y nos vincularemos a él. Hacemos un pull. Posteriormente, crearemos un archivo (por ejemplo README2.md), y lo aprobaremos *commit* en nuestro master. Por último, lo subiremos al repositorio de Gitlab
+
+### Paso 3 - Git Pull
+
+El comando *git push* permite subir los cambios a un repositorio remoto, mientras que *git pull* funciona de forma inversa. El comando *git pull* permite sincronizar cambios de un repositorio remoto en nuestra versión local.
+
+Los cambios desde el repositorio remoto son automáticamente fusionados (*merge*) en la rama en la que estamos trabajando en el momento de lanzar el comando.
+
+#### Tarea
+
+* Crear un nuevo repositorio llamado scn3-pull.
+
+* Descargar (*pull*) los cambios de una ubicación remota https://github.com/sharkdp/bat a nuestra rama *master*.
+
+* Borrar los archivos siguientes appveyor.yml Cargo.lock Cargo.toml LICENSE-APACHE LICENSE-MIT README.md
+
+* Agregar un archivo LEEME.txt
+
+* Aprobar los cambios.
+
+* Lanzar un “ls” para ver los archivos de la rama *master*.
+
+* Hacer un *checkout* para cambiarnos a *origin/master*.
+
+* Lanzar un “ls” para ver los archivos de la rama *origin/master*.
+
+* Conmutarnos de nuevo a la rama master y volver a lanzar un comando “ls”
+
 En el siguiente paso exploraremos qué cambios se han efectuado.
 
 IMPORTANTE: Podemos crear y cambiar de rama con un mismo comando.
 
+```sh
 git checkout -b nombre-rama
+```
+
 Esto nos capacita para descargar una versión de repositorio, y luego versionar
 
-Paso 4 - Git Log
-Tal y como se ha descrito en la lección previa, podemos usar git log para ver el histórico del repositorio. El comando git show permitirá ver los cambios realizados en cada commit.
+### Paso 4 - Git Log
 
-En esta prueba, vamos a usar el repositorio anterior, que tenemos vinculado al proyecto BAT y vamos a filtrar los commits que lleven la cadena Fix o fix. Al más reciente de los cuales, le lanzaremos un git show <hashid> para visualizar los cambios.
+Tal y como se ha descrito en la lección previa, podemos usar *git log* para ver el histórico del repositorio. El comando *git show* permitirá ver los cambios realizados en cada *commit*.
 
-Avanzado
+En esta prueba, vamos a usar el repositorio anterior, que tenemos vinculado al proyecto BAT y vamos a filtrar los commits que lleven la cadena Fix o fix. Al más reciente de los cuales, le lanzaremos un *git show <hashid>* para visualizar los cambios.
+
+#### Avanzado
+
 Usar el modificador –pretty para llevar a cabo la consulta de commits en el repositorio remoto de BAT
 
 ## Deshacer cambios 18:19 
 
-[](pdfs/)
+[Deshacer cambios](pdfs/Deshaciendo_cambios.pdf)
+
+Una de las ventajas principales cuando usamos un sistema de control de versiones es la capacidad de deshacer cambios y volver a una versión previa. Git proporciona enfoques poderosos y control sobre la gestión de los repositorios y su histórico. Exploraremos esas posibilidades en esta lección.
+
+Notas previas:
+
+hace falta crear un repositorio git con algunos commits previos
+
+### Paso 1 - Git Checkout
+
+Cuando trabajamos con Git, una lección habitual es deshacer cambios en nuestro *working directory*. El comando *git checkout* reemplazará todo en el *working directory* a la última versión aprobada (*commited*).
+
+Si deseamos reemplazar todos los ficheros hacia el *working directory*, usamos el carácter punto (“.”) para referenciar al directorio actual. En otro caso, se proporciona una lista de directorios/ficheros separados por espacios.
+
+Como sucede que *git checkout* acepta tanto nombres de rama, como ficheros (o path de ellos), se puede usar el indicador “—” para forzar a Git a interpretar que cualquier cosa que venga después de “—”, es un nombre de fichero (o todos los ficheros); en otro caso, se interpretará como el nombre de una rama.
+
+Se ilustra en este ejemplo la diferencia:
+
+Supongamos que tengo un archivo llamado *master* pero también una rama llamada *master* .
+
+El comando
+
+```sh
+git checkout master
+```
+
+Haría un checkout de la rama, pero el comando:
+
+```sh
+git checkout -- master
+```
+
+chequearía el fichero *master*.
+
+El comando
+
+```sh
+git checkout HEAD -- .
+```
+
+forzaría a reemplazar TODOS LOS ARCHIVOS (de ahí el “—”) lo que teníamos en el último commit a nuestro *working directory* (que es el “.”).
+
+Si tenemos algo en staging y queremos eliminarlo de staging, entonces usamos:
+
+```sh
+ git reset HEAD fichero
+```
+
+#### Avanzado
+
+Git checkout, no toca el área de preparación o stagging rea. Para eso tenemos un git reset.
+
+#### Tarea
+
+Usar *git checkout* para limpiar o deshacer los cambios del *working directory*.
+
+Pasos:
+
+* Creamos un directorio de trabajo, entramos en él y lo inicializamos.
+
+* Creamos el README.md, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero1, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero2, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero3, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Hacemos un borrado de “fichero” *y nos aseguramos de que el borrado esté en staging*.
+
+* Lanzamos “ls -l”
+
+* Luego reemplazamos todo el contenido del directorio con lo que existiese en el HEAD de la rama master.
+
+### Paso 2 - Git Reset
+
+Si estamos en la mitad de un *commit* y tenemos agregados ficheros a la *staging area* pero cambiamos de idea, entonces necesitaremos usar el comando *git reset*. El comando *git reset* eliminará a los ficheros de la *staging area* y los dejará en el *working directory* en estado *untracked* (no registrados).
+
+Si deseamos sacar todos los ficheros de la *staging area*, debemos usar el carácter “.” para indicarlo. En otro caso, se admite una lista de ficheros separados por espacios.
+
+Esto es muy útil cuando intentamos mantener nuestros *commits* pequeños y concentrados de tal forma que podamos sacarlos de staging si hemos añadido demasiados de una tacada.
+
+#### Tarea
+
+Creamos un escenario de nuestra elección. Hacemos un par de commits.
+
+Por último creamos un fichero más. Lo agregamos a staging.
+
+Lanzamos *git reset* para dejarlo en estado *untracked*.
+
+### Paso 3 - Git Reset Hard
+
+El comando *git reset —hard* combinará tanto el efecto de un *git checkout* como el de un *git reset* en un único comando. El resultado es que se eliminarán los ficheros de la *staging area* y del *working directory* de tal forma que volvemos a los mismos contenidos que estaban presentes en el último commit. Es un comando al que hay que tenerle respeto, porque podemos perder información si no estamos muy seguros de lo que estamos haciendo.
+
+#### Avanzado
+
+Usar HEAD limpiará el estado hacia lo que había en el último *commit*; si usamos git reset —hard nos posibilita volver al estadod e cualquier *commit*. Recordemos que HEAD es un alias para el has del último *commit* de la rama.
+
+#### Tarea
+
+Pasos:
+
+* Creamos un directorio de trabajo, entramos en él y lo inicializamos.
+
+* Creamos el README.md, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero1, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero2, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero3, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos fichero4 y fichero5, los incluimos en staging pero NO APROBAMOS.
+
+* Lanzamos “ls -l” y “git status”.
+
+* Hacemos un reset hard hacia HEAD-3 y lanzamos “ls -l” y “git status”.
+
+* Debemos estar en un estado sin staging y con la misma “foto” que en HEAD-3.
+
+### Paso 4 - Git Revert
+
+Si ya has aprobado fichero pero te has dado cuenta de que has cometido un error, entonces el comando *git revert* te permite deshacer los cambios que se hayan producido en ese *commit* concreto. El comando creará un nuevo *commit* que tiene la afección invertida del *commit* al que hemos revertido (de modo que si volvemos a él, nos quedamos como estábamos).
+
+Si aún no hemos subido (*pushed*) los cambios, entonces el comando git reset HEAD~1 tiene la misma afección y borrará el último *commit* que ha sido creado por el *revert*.
+
+#### Tarea
+
+Usar *git revert* para revertir los cambios del último *commit*.
+
+Para ello:
+
+* Creamos un directorio de trabajo, entramos en él y lo inicializamos.
+
+* Creamos el README.md, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero1, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero2, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero3, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Deshacemos el initial commit y comprobamos si ha desaparecido algún fichero.
+
+#### Avanzado
+
+La motivación subyacente de crear nuevos commits es que reescribir la historia en GIT es algo desaconsejado. Si has subido (pushed) tus commits, entonces deberías crear nuevos commits para deshacer los cambios provocados, ya que otros usuarios podrían a ver hecho commits mientras tanto.
+
+### Paso 5 - Git Revert
+
+Para hacer *revert* de múltiples *commits* de una tacada usamos el carácter ~ para significar “menos”. Por ejemplo, HEAD~2, son dos *commits* desde HEAD. Esto puede combinarse con los caracteres “…” que indican el rango entre dos *commits*.
+
+#### Tarea
+
+Usamos el comando *git revert HEAD…HEAD~2* para revertir los commits hechos entre HEAD y HEAD~2.
+
+Para ello:
+
+* Creamos un directorio de trabajo, entramos en él y lo inicializamos.
+
+* Creamos el README.md, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero1, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero2, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Creamos el fichero3, le agregamos contenido, lo incluimos en staging y lo aprobamos.
+
+* Ahora, usamos el comando git revert tal y como se ha propuesto.
+
+#### Avanzado
+
+Si en un revert, no tenemos ganas de pasar uno a uno por los cambios del rango seleccionado, se puede hacer así:
+
+```sh
+git revert HEAD...HEAD~2 --no-edit
+```
 
 ## Reparando conflictos de unión con merge 
 
-[](pdfs/)
+[Reparando conflictos de unión con merge ](pdfs/Reparando_conflictos_de_union_con_merge.pdf)
+
+En esta lección aprenderemos cómo podemos compartir los cambios en nuestro repositorio con otras personas, y combinarlos en el nuestro.
+
+Simularemos un trabajo con otros desarrolladores y provocaremos un conflicto. Descubriremos qué opciones tenemos para resolverlo.
+
+### Paso 1 - Git Merge
+
+El comando *git fetch* descarga los cambios en una rama separada que puede ser comprobada (*checked out*) y fusionada (*merge*). Durante un *merge git* intentará automáticamente combinar los *commits*.
+
+Cuando no existen conflictos, el *merge* será tratado rápidamente y no tendremos que hacer nada. Si sucede un conflicto, entonces recibiremos un error y el repositorio entrará en estado *merge*.
+
+#### Tarea
+
+Creamos un directorio que inicializamos.
+
+Creamos un archivo README.md y le agregamos contenido. Este fichero provocará una colisión.
+
+Lo agregamos a staging y hacemos *commit*.
+
+Nos vincularemos al proyecto BAT accesible en https://github.com/sharkdp/bat
+
+Trataremos de lanzar un *merge* y resolver el conflicto.
+
+#### Avanzado
+
+El comando *git pull* es una combinación de *fetch* y de *merge*.
+
+En lugar de un fetch+merge, se puede usar:
+
+```sh
+git pull origin master –allow-unrelated-histories
+```
 
 ## Contenido adicional 5   
