@@ -300,31 +300,36 @@ En esta lección, vamos a tratar de tomar parte del árbol del proyecto BAT y en
 
 Un aspecto importante de Git es cómo mantener limpio el repositorio y su historia. Una historia limpia es más cómoda para trabajar y para comprender qué ha sucedido.
 
-En esta lección cubriremos cómo reescribir la historia de Git usando el comando rebase para reestructurar los commits y asegurarnos de que son comprensibles antes de subir / push los cambios.
+En esta lección cubriremos cómo reescribir la historia de Git usando el comando *rebase* para reestructurar los *commits* y asegurarnos de que son comprensibles antes de subir /*push* los cambios.
 
-Recomendación: Solo deberíamos hacer rebase de commits que no hayamos compartido con otras personas vía push. El proceso de rebasing de commits provoca que los hash_id commit-ids cambien, lo cual puede resultar en pérdida de commits futuros.
+**Recomendación**: Solo deberíamos hacer *rebase* de *commits* que no hayamos compartido con otras personas vía *push*. El proceso de *rebasing* de *commits* provoca que los hash_id *commit-ids* cambien, lo cual puede resultar en pérdida de *commits* futuros.
 
-Paso 1 - Enmendando (amend) mensajes de commit
+### Paso 1 - Enmendando (amend) mensajes de commit
+
 Para reescribir el histórico de los repositorios, usamos el comando:
 
+```sh
 git rebase -interactive
+```
+
 Al poner un rebase en modo interactivo, tenemos más control sobre los cambios que queremos hacer. Después de lanzar el modo interactivo, disponemos de 6 comandos para llevar a cabo en cada commit del repositorio. Usando el editor, podemos definir qué acciones queremos llevar a cabo en cada commit .
 
 En este ejercicio, vamos a cambiar el comentario de un commit. Tras ponerlo en estado rebase , tendremos que cambiar la palabra pick por la palabra reword para el identificador de commit para el que queramos cambiar la descripción.
 
 En esta lección, solo vamos a cambiar la descripción. Ejemplo:
 
+#### Tarea
 
-
-
-Tarea
 Para este ejercicio, vamos a crear un nuevo repositorio.
 
 Crearemos 9 ficheros, y tras la creación de cada uno, haremos un commit y agregaremos un texto inequívoco que nos sirva como descriptor.
 
 Para empezar el rebase lanzamos:
 
+```sh
 git rebase --interactive --root
+```
+
 Entrando en “Interactive Mode”
 
 Una vez que estemos en la pantalla de la ilustración anterior, cambiaremos la palabra “pick“ del primer commit de la lista por la palabra “reword“.
@@ -337,53 +342,70 @@ Ahora cambiamos el mensaje por lo que queramos. Grabamos y salimos.
 
 Lanzamos el comando:
 
+```sh
 git log --oneline
+```
+
 para comprobar que se ha actualizado el mensaje.
 
-Avanzado
+#### Avanzado
+
 El argumento —root permite hacer un rebase de TODOS los commits del repositorio, incluyendo el primer commit.
 
 Cuando lo que queremos es únicamente cambiar el mensaje del último commit realizado, la alternativa más rápida es lanzar el comando:
 
+```sh
 git commit --amend
+```
+
 y efectuar los cambios.
 
-Paso 2 - Aprobaciones condensadas (Squash Commits)
+### Paso 2 - Aprobaciones condensadas (Squash Commits)
+
 Hemos realizado una serie de commits en nuestro entorno. En el momento en el que se hicieron, quizás esos cambios tenían sentido como operaciones independientes, pero ahora necesitamos condensarlos en un único commit.
 
 Usando rebase podemos condensar (squash) los commits todos juntos.
 
 Lanzando git rebase —interactive HEAD~4, tendremos 4 commits disponibles. Para condensarlo, necesitamos una base sobre la que todo será condensado. Por ello, en el ejercicio siguiente, dejamos el primer commit como pick y marcamos los demás como squash . Después de guardar, podremos cambiar el mensaje de commit por algo más clarificador.
 
-Tarea
+#### Tarea
+
 Cuando entramos en modo interactive rebase podemos especificar lo que queremos modificar en los 4 previos commits. Lanzamos:
 
+```sh
 git rebase --interactive HEAD~4
+```
+
 En el ejercicio anterior usamos reword . Aquí vamos a usar squash. Queremos condensar 4 commits en uno; si etiquetáramos todos los commits como squash, obtendríamos un error: “Cannot ‘squash’ without a previous commit“ ya que se supone que debe existir un commit base sobre el que condensar los demás.
 
 Para condensar los commits tenemos que dejar el primer commit (el más antiguo temporalmente) como nuestra base, y etiquetar el resto con squash.
 
 Mensaje de commit
+
 Al salvar y salir se mostrará una ventana con una combinación de los cuatro mensajes de commit en el rebase.
 
 Después de guardar el mensaje de commit, el histórico se modificará. Podemos comprobar que el hasid no coincide lanzando:
 
+```sh
 git log --oneline
+```
+
 Reordenar commits
 Reordenar commits puede ayudar a construir una foto más clara del orden lógico cómo se ha completado lo que hemos trabajado.
 
-Tarea
+#### Tarea
+
 Queremos reordenar nuestros últimos dos commits. Usando HEAD~2 podremos hacerlo:
 
+```sh
 git rebase --interactive HEAD~2
+```
+
 Usando el editor, simplemente reordenaremos las líneas, guardaremos y saldremos y los commits reflejarán el nuevo orden.
 
 Aquí tenemos una ilustración:
 
-
-
-
-
+```sh
 $ git log --oneline
 3254464 (HEAD -> master) Rebase combinado del seis al nueve
 c58f563 commit numero cinco - fichero1.js
@@ -391,7 +413,11 @@ c58f563 commit numero cinco - fichero1.js
 b7f8abc commit numero cuatro - fichero1.js
 5f03709 commit numero dos
 1ca0ef6 Ahora tras el rebase commit numero uno
-Paso 3 - Separar los commits (split)
+```
+
+
+### Paso 3 - Separar los commits (split)
+
 Del mismo modo que cuando se condensan los commits, a veces es útil separar o desmenuzar los commits con el objeto de mantener la atención y posibilitar un cherry-pick o un revert más sencillo.
 
 Separar los commits es un proceso de dos fases. Primero necesitamos definir qué commit queremos dividir o separar, y segundo, necesitamos definir cómo queremos que se muestren los nuevos commits.
@@ -400,7 +426,10 @@ Definiendo el commit que separar (split)
 
 Aquí queremos separar el commit anterior. Lanzamos:
 
+```sh
 git rebase --interactive HEAD~1
+```
+
 Como en rebase’s previos, necesitamos cambiar la tarea al término edit
 
 Ahora estamos en un estado de edición interactiva del histórico. Git grabará todos los cambios y el resultado final será aplicado al repositorio.
@@ -411,23 +440,34 @@ Después de definir que queremos editar el commit, nos encontramos en un estado 
 
 Como queremos separar un commmit existente, primero necesitamos borrarlo lanzando el comando: git reset HEAD~1.
 El commit ha sido borrado pero aún existe. Ahora podemos llevar a cabo los commits como deseamos, es decir, como dos acciones separadas.
+
 Ejecutamos los siguientes comandos:
 
+```sh
 git add file3.txt
 git commit -m "File 3"
 git add file4.txt
 git commit -m "File 4"
+```
+
 Guardando “la grabación” del rebase
 
 Una vez que estamos felices con el estado del repositorio, y conformes, podemos decirle a git que continúe el rebase y que actualice el repositorio lanzando el comando:
 
+```sh
 git rebase --continue
+```
+
 Podemos visualizar la salida y los dos nuevos commits con el comando:
 
+```sh
 git log --oneline
+```
+
 La capacidad de reescribir el histórico es útil para mantener el histórico del repositorio limpio y preciso. Esto ayudará en el futuro para indicar las razones para un cambio o para depurar problemas de código.
 
 Recomendación
+
 Solo deberíamos hacer un rebase en commits que no hayamos compartido con otras personas vía push. El rebasing causa que los identificadores de commit cambien, lo que puede desembocar en pérdida de commits futuros.
 
 ## Etiquetas 5:13 
@@ -436,16 +476,21 @@ Solo deberíamos hacer un rebase en commits que no hayamos compartido con otras 
 
 Como muchos VCS, Git tiene la posibilidad de etiquetar puntos específicos del historial como importantes. Esta funcionalidad se usa típicamente para marcar versiones de lanzamiento (v1.0, por ejemplo). En esta sección, aprenderás como listar las etiquetas disponibles, como crear nuevas etiquetas cuales son los distintos tipos de etiquetas. En esta lección aprenderemos cómo trabajar con ellas.
 
-Paso 4 - Listar Tus Etiquetas
+### Paso 4 - Listar Tus Etiquetas
+
 Listar las etiquetas disponibles en Git es sencillo. Simplemente escribe git tag:
 
+```sh
 $ git tag
 v0.1
 v1.3
+```
+
 Este comando lista las etiquetas en orden alfabético; el orden en el que aparecen no tiene mayor importancia.
 
 También puedes buscar etiquetas con un patrón particular. El repositorio del código fuente de Git, por ejemplo, contiene más de 500 etiquetas. Si solo te interesa ver la serie 1.8.5, puedes ejecutar:
 
+```sh
 $ git tag -l 'v1.8.5*'
 v1.8.5
 v1.8.5-rc0
@@ -457,25 +502,33 @@ v1.8.5.2
 v1.8.5.3
 v1.8.5.4
 v1.8.5.5
-Paso 5 - Crear Etiquetas
+```
+
+### Paso 5 - Crear Etiquetas
+
 Git utiliza dos tipos principales de etiquetas: ligeras y anotadas. Una etiqueta ligera es muy parecido a una rama que no cambia - simplemente es un puntero a un commit especifico.
 
 Sin embargo, las etiquetas anotadas se guardan en la base de datos de Git como objetos enteros.
 
 Tienen un checksum; contienen el nombre del etiquetador, correo electrónico y fecha; tienen un mensaje asociado; y pueden ser firmadas y verificadas con GNU Privacy Guard (GPG). Normalmente se recomienda que crees etiquetas anotadas, de manera que tengas toda esta información; pero si quieres una etiqueta temporal o por alguna razón no estas interesado en esa información, entonces puedes usar las etiquetas ligeras.
 
-Paso 6 - Etiquetas Anotadas
+### Paso 6 - Etiquetas Anotadas
+
 Crear una etiqueta anotada en Git es sencillo. La forma más fácil de hacer es especificar la opción -a cuando ejecutas el comando tag:
 
+```sh
 $ git tag -a v1.4 -m 'my version 1.4'
 $ git tag
 v0.1
 v1.3
 v1.4
+```
+
 La opción -m especifica el mensaje de la etiqueta, el cual es guardado junto con ella. Si no especificas el mensaje de una etiqueta anotada, Git abrirá el editor de texto para que lo escribas.
 
 Puedes ver la información de la etiqueta junto con el commit que está etiquetado al usar el comando git show:
 
+```sh
 $ git show v1.4
 tag v1.4
 Tagger: Ben Straub <ben@straub.cc>
@@ -485,11 +538,15 @@ commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
 Date: Mon Mar 17 21:52:11 2008 -0700
 changed the version number
+```
+
 El comando muestra la información del etiquetador, la fecha en la que el commit fue etiquetado y el mensaje de la etiquetar, antes de mostrar la información del commit.
 
-Paso 7 - Etiquetas Ligeras
+### Paso 7 - Etiquetas Ligeras
+
 La otra forma de etiquetar un commit es mediante una etiqueta ligera. Una etiqueta ligera no es más que el checksum de un commit guardado en un archivo - no incluye más información. Para crear una etiqueta ligera, no pases las opciones -a, -s ni -m:
 
+```sh
 $ git tag v1.4-lw
 $ git tag
 v0.1
@@ -497,13 +554,17 @@ v1.3
 v1.4
 v1.4-lw
 v1.5
+```
+
 Esta vez, si ejecutas git show sobre la etiqueta, no veras la información adicional. El comando solo mostrará el commit:
 
+```sh
 $ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
 Date: Mon Mar 17 21:52:11 2008 -0700
 changed the version number
+```
 
 ## Moverse adelante y atrás entre estados de un repositorio git 7:43 
 
@@ -511,31 +572,43 @@ changed the version number
 
 Con el comando:
 
+```sh
 git checkout <hash-id>
+```
+
 Entramos en modo desconectado, pero tenemos una foto idéntica a la que teníamos en ese instante del tiempo.
 
 En subversion hubiera sido con el comando:
 
+```sh
 svn up -r800
+```
 (suponiendo la versión 800)
 
 Para volver al HEAD, escribimos:
 
+```sh
 git checkout master
+```
 o bien
 
+```sh
 git checkout -
 (un único guion al final del comando).
 
-Tarea:
+#### Tarea:
+
 Movernos al commit inicial y al HEAD y comprobar cómo los ficheros aparecen y desaparecen
 
 Nota:
+
 git stash guarda el estado que tengamos en ese momento sin aprobar o en staged.
 
 Se recupera con:
 
+```sh
 git stash apply
+```
 
 ## Git Stash 3:46 
 
